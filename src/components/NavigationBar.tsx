@@ -159,9 +159,6 @@ export function NavigationBar({
               >
                 <p className="text-xs text-gray-600">Carbenium Balance</p>
                 <p className="text-xl text-gray-900">{gxctBalance} Carbenium</p>
-                <p className="text-xs text-amber-700">
-                  ≈ {(gxctBalance * 3.67).toFixed(2)} AED
-                </p>
               </div>
 
               {menuItems.map((item) => {
