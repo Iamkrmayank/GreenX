@@ -1,0 +1,265 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Tajawal:wght@400;500;700&display=swap');
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+  --background: #ffffff;
+  --foreground: #101820;
+  --card: #ffffff;
+  --card-foreground: #101820;
+  --popover: #ffffff;
+  --popover-foreground: #101820;
+  --primary: #00B686;
+  --primary-foreground: #ffffff;
+  --secondary: #CBAF64;
+  --secondary-foreground: #101820;
+  --muted: #ececf0;
+  --muted-foreground: #717182;
+  --accent: #4DC3E9;
+  --accent-foreground: #101820;
+  --destructive: #d4183d;
+  --destructive-foreground: #ffffff;
+  --border: rgba(0, 0, 0, 0.1);
+  --input: transparent;
+  --input-background: #f3f3f5;
+  --switch-background: #cbced4;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: #00B686;
+  --chart-1: #00B686;
+  --chart-2: #4DC3E9;
+  --chart-3: #CBAF64;
+  --chart-4: #101820;
+  --chart-5: #717182;
+  --radius: 0.875rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #101820;
+  --sidebar-primary: #00B686;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f3f3f5;
+  --sidebar-accent-foreground: #101820;
+  --sidebar-border: rgba(0, 0, 0, 0.1);
+  --sidebar-ring: #00B686;
+  
+  /* GreenXchain custom colors */
+  --emerald-green: #00B686;
+  --desert-gold: #CBAF64;
+  --sky-blue: #4DC3E9;
+  --charcoal-black: #101820;
+}
+
+.dark {
+  --background: #101820;
+  --foreground: #ffffff;
+  --card: #1a1f2e;
+  --card-foreground: #ffffff;
+  --popover: #1a1f2e;
+  --popover-foreground: #ffffff;
+  --primary: #00B686;
+  --primary-foreground: #ffffff;
+  --secondary: #CBAF64;
+  --secondary-foreground: #101820;
+  --muted: #2a2f3e;
+  --muted-foreground: #a0a0a0;
+  --accent: #4DC3E9;
+  --accent-foreground: #101820;
+  --destructive: #d4183d;
+  --destructive-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #00B686;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --chart-1: #00B686;
+  --chart-2: #4DC3E9;
+  --chart-3: #CBAF64;
+  --chart-4: #ffffff;
+  --chart-5: #a0a0a0;
+  --sidebar: #1a1f2e;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #00B686;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #2a2f3e;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #00B686;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Baloo 2', 'Inter', 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  
+  [dir="rtl"] body {
+    font-family: 'Tajawal', 'Baloo 2', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+}
+
+/**
+ * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
+ */
+@layer base {
+  :where(:not(:has([class*=' text-']), :not(:has([class^='text-'])))) {
+    h1 {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h2 {
+      font-size: var(--text-xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h3 {
+      font-size: var(--text-lg);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h4 {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    p {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+
+    label {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    button {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    input {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+  }
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+/* Custom animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.animate-slide-in-up {
+  animation: slideInUp 0.5s ease-out;
+}
+
+/* Gradient backgrounds */
+.gradient-emerald {
+  background: linear-gradient(135deg, #00B686 0%, #00d99a 100%);
+}
+
+.gradient-gold {
+  background: linear-gradient(135deg, #CBAF64 0%, #e0c87f 100%);
+}
+
+.gradient-sky {
+  background: linear-gradient(135deg, #4DC3E9 0%, #6dd5f5 100%);
+}
+
+.gradient-dark {
+  background: linear-gradient(135deg, #101820 0%, #1a2230 100%);
+}
+
+.gradient-primary {
+  background: linear-gradient(135deg, #00B686 0%, #4DC3E9 100%);
+}

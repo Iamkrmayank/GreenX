@@ -1,0 +1,531 @@
+import { motion } from "motion/react";
+import { useState } from "react";
+import { Card } from "./ui/card";
+import { Button } from "./ui/button";
+import { Badge } from "./ui/badge";
+import { Progress } from "./ui/progress";
+import {
+  ArrowLeft,
+  Zap,
+  TrendingDown,
+  Calendar,
+  Activity,
+  CheckCircle,
+  Clock,
+  Target,
+  Share2,
+  Plus,
+  Info,
+  Lock,
+  RefreshCw,
+  Calculator,
+  Eye,
+  AlertCircle,
+} from "lucide-react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "./ui/breadcrumb";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "./ui/accordion";
+import { Footer } from "./Footer";
+import {
+  Line,
+  LineChart,
+  Bar,
+  BarChart,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+
+interface EnergyTrackerPageProps {
+  onBack: () => void;
+}
+
+const weeklyData = [
+  { day: "Mon", kwh: 45, gxct: 12.5 },
+  { day: "Tue", kwh: 38, gxct: 15.2 },
+  { day: "Wed", kwh: 42, gxct: 13.8 },
+  { day: "Thu", kwh: 35, gxct: 16.9 },
+  { day: "Fri", kwh: 40, gxct: 14.3 },
+  { day: "Sat", kwh: 32, gxct: 18.1 },
+  { day: "Sun", kwh: 36, gxct: 16.5 },
+];
+
+const activityHistory = [
+  {
+    id: 1,
+    action: "Reduced electricity usage by 15 kWh",
+    timestamp: "2 hours ago",
+    gxct: "+5.3",
+    icon: TrendingDown,
+  },
+  {
+    id: 2,
+    action: "Peak hour consumption avoided",
+    timestamp: "5 hours ago",
+    gxct: "+3.8",
+    icon: Clock,
+  },
+  {
+    id: 3,
+    action: "Daily target achieved",
+    timestamp: "Yesterday",
+    gxct: "+8.2",
+    icon: Target,
+  },
+  {
+    id: 4,
+    action: "Reduced AC usage during peak hours",
+    timestamp: "Yesterday",
+    gxct: "+6.5",
+    icon: TrendingDown,
+  },
+  {
+    id: 5,
+    action: "Weekly goal completed",
+    timestamp: "2 days ago",
+    gxct: "+15.0",
+    icon: CheckCircle,
+  },
+];
+
+export function EnergyTrackerPage({ onBack }: EnergyTrackerPageProps) {
+  const [timeframe, setTimeframe] = useState<"daily" | "weekly">("weekly");
+  const currentProgress = 85;
+  const monthlyTarget = 1500;
+  const currentAchieved = 1275;
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50">
+      {/* Header with Breadcrumb */}
+      <div className="bg-white/80 backdrop-blur-md border-b-2 border-emerald-200 sticky top-0 z-40">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 py-4">
+          <div className="flex items-center gap-4 mb-3">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onBack}
+              className="hover:bg-emerald-100 rounded-xl"
+            >
+              <ArrowLeft className="w-5 h-5 text-gray-700" />
+            </Button>
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink
+                    className="text-gray-600 hover:text-emerald-600 cursor-pointer"
+                    onClick={onBack}
+                  >
+                    Dashboard
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage className="text-gray-900">
+                    Energy Tracker
+                  </BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+
+          {/* Hero Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex flex-col md:flex-row md:items-center justify-between gap-4"
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center shadow-lg">
+                <Zap className="w-8 h-8 text-white" />
+              </div>
+              <div>
+                <h1 className="text-2xl sm:text-3xl text-gray-900 mb-1">
+                  Energy Tracker
+                </h1>
+                <p className="text-sm text-gray-600">
+                  DEWA Integration • Connected ✅
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Card className="px-4 py-3 bg-gradient-to-r from-emerald-100 to-green-100 border-2 border-emerald-300">
+                <p className="text-xs text-gray-600 mb-0.5">Latest Earned</p>
+                <p className="text-xl text-emerald-700">
+                  +45.2 Token
+                </p>
+                <p className="text-xs text-gray-600">2 hours ago</p>
+              </Card>
+              <div className="flex gap-2">
+                <Button
+                  size="sm"
+                  className="bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Activity
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="border-2 border-emerald-300 hover:bg-emerald-50"
+                >
+                  <Share2 className="w-4 h-4 mr-2" />
+                  Share
+                </Button>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Progress Bar */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="mt-4"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm text-gray-600">Monthly Progress</span>
+              <span className="text-sm text-emerald-700">{currentProgress}%</span>
+            </div>
+            <Progress value={currentProgress} className="h-3" />
+          </motion.div>
+        </div>
+      </div>
+
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Analytics Summary */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <h2 className="text-xl text-gray-900 mb-4">Analytics Summary</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <Card className="p-5 bg-white border-2 border-gray-200 hover:border-emerald-300 hover:shadow-lg transition-all">
+                  <div className="flex items-center justify-between mb-3">
+                    <TrendingDown className="w-8 h-8 text-emerald-600" />
+                    <Badge className="bg-emerald-100 text-emerald-700 border-0">
+                      ↓ 12%
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-1">Carbon Saved</p>
+                  <p className="text-3xl text-gray-900 mb-1">342.5</p>
+                  <p className="text-xs text-gray-500">kg CO₂ this month</p>
+                </Card>
+
+                <Card className="p-5 bg-white border-2 border-gray-200 hover:border-emerald-300 hover:shadow-lg transition-all">
+                  <div className="flex items-center justify-between mb-3">
+                    <Activity className="w-8 h-8 text-amber-600" />
+                    <Badge className="bg-amber-100 text-amber-700 border-0">
+                      +8%
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-1">Tokens Earned</p>
+                  <p className="text-3xl text-gray-900 mb-1">145.8</p>
+                  <p className="text-xs text-gray-500">Carbeneum this month</p>
+                </Card>
+
+                <Card className="p-5 bg-white border-2 border-gray-200 hover:border-emerald-300 hover:shadow-lg transition-all">
+                </Card>
+              </div>
+            </motion.div>
+
+            {/* Chart Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              <Card className="p-5 bg-white border-2 border-gray-200">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg text-gray-900">Usage Trends</h3>
+                  <Tabs
+                    value={timeframe}
+                    onValueChange={(v) => setTimeframe(v as "daily" | "weekly")}
+                  >
+                    <TabsList className="bg-gray-100 border border-gray-200">
+                      <TabsTrigger value="daily" className="text-xs">
+                        Daily
+                      </TabsTrigger>
+                      <TabsTrigger value="weekly" className="text-xs">
+                        Weekly
+                      </TabsTrigger>
+                    </TabsList>
+                  </Tabs>
+                </div>
+                <div className="h-64">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={weeklyData}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                      <XAxis dataKey="day" stroke="#6b7280" fontSize={12} />
+                      <YAxis stroke="#6b7280" fontSize={12} />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: "white",
+                          border: "2px solid #10b981",
+                          borderRadius: "8px",
+                        }}
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="gxct"
+                        stroke="#10b981"
+                        strokeWidth={3}
+                        dot={{ fill: "#10b981", r: 4 }}
+                        name="Carbeneum Earned"
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </Card>
+            </motion.div>
+
+            {/* Activity History */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+            >
+              <h2 className="text-xl text-gray-900 mb-4">Activity History</h2>
+              <div className="space-y-3">
+                {activityHistory.map((activity, index) => {
+                  const Icon = activity.icon;
+                  return (
+                    <motion.div
+                      key={activity.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.6 + index * 0.05 }}
+                    >
+                      <Card className="p-4 bg-white border-2 border-gray-200 hover:border-emerald-300 hover:shadow-md transition-all">
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                            <Icon className="w-6 h-6 text-emerald-600" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm text-gray-900 mb-0.5">
+                              {activity.action}
+                            </p>
+                            <p className="text-xs text-gray-500">
+                              {activity.timestamp}
+                            </p>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-lg text-emerald-600">
+                              {activity.gxct}
+                            </p>
+                            <p className="text-xs text-gray-500">Carbeneum</p>
+                          </div>
+                        </div>
+                      </Card>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </motion.div>
+
+            {/* How It Works - Information Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+            >
+              <Card className="p-5 bg-white border-2 border-gray-200">
+                <div className="flex items-center gap-2 mb-4">
+                  <Info className="w-5 h-5 text-emerald-600" />
+                  <h2 className="text-xl text-gray-900">How DEWA Integration Works</h2>
+                </div>
+                
+                <Accordion type="single" collapsible className="w-full">
+                  <AccordionItem value="what-we-read" className="border-b border-gray-200">
+                    <AccordionTrigger className="text-sm text-gray-900 hover:text-emerald-600 py-3">
+                      <div className="flex items-center gap-2">
+                        <Eye className="w-4 h-4 text-emerald-600" />
+                        <span>What we read</span>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm text-gray-700 pb-4 leading-relaxed">
+                      Securely reads monthly/weekly kWh usage and bill periods from your DEWA account (read-only).
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="how-we-calculate" className="border-b border-gray-200">
+                    <AccordionTrigger className="text-sm text-gray-900 hover:text-emerald-600 py-3">
+                      <div className="flex items-center gap-2">
+                        <Calculator className="w-4 h-4 text-emerald-600" />
+                        <span>How we calculate</span>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm text-gray-700 pb-4 leading-relaxed">
+                      We compare your current kWh to your baseline (your past average for the same period/season). The difference × grid CO₂ factor gives CO₂ saved. Carbeneum = CO₂ saved × token rate.
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="update-frequency" className="border-b border-gray-200">
+                    <AccordionTrigger className="text-sm text-gray-900 hover:text-emerald-600 py-3">
+                      <div className="flex items-center gap-2">
+                        <RefreshCw className="w-4 h-4 text-emerald-600" />
+                        <span>Update frequency</span>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm text-gray-700 pb-4 leading-relaxed">
+                      Daily snapshot; detailed bill data on each DEWA cycle.
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="privacy-control" className="border-b border-gray-200">
+                    <AccordionTrigger className="text-sm text-gray-900 hover:text-emerald-600 py-3">
+                      <div className="flex items-center gap-2">
+                        <Lock className="w-4 h-4 text-emerald-600" />
+                        <span>Privacy & control</span>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm text-gray-700 pb-4 leading-relaxed">
+                      We never store DEWA passwords. You can disconnect anytime; your data is encrypted at rest and in transit.
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="troubleshoot" className="border-none">
+                    <AccordionTrigger className="text-sm text-gray-900 hover:text-emerald-600 py-3">
+                      <div className="flex items-center gap-2">
+                        <AlertCircle className="w-4 h-4 text-amber-600" />
+                        <span>Troubleshoot</span>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm text-gray-700 pb-4 leading-relaxed">
+                      If usage doesn't update: check DEWA login, ensure "consumption data" permission is enabled, then Reconnect.
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </Card>
+            </motion.div>
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Partner Integration */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <Card className="p-5 bg-gradient-to-br from-emerald-100 to-green-100 border-2 border-emerald-300">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center">
+                    <Zap className="w-6 h-6 text-emerald-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-base text-gray-900">DEWA</h3>
+                    <p className="text-xs text-gray-600">
+                      Dubai Electricity & Water Authority
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-sm text-gray-700">Status</span>
+                  <Badge className="bg-emerald-600 text-white border-0">
+                    Connected ✅
+                  </Badge>
+                </div>
+                <Button
+                  variant="outline"
+                  className="w-full border-2 border-emerald-400 hover:bg-white"
+                  size="sm"
+                >
+                  Reconnect
+                </Button>
+              </Card>
+            </motion.div>
+
+            {/* Goal Progress */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              <Card className="p-5 bg-white border-2 border-gray-200">
+                <div className="flex items-center gap-2 mb-4">
+                  <Target className="w-5 h-5 text-gray-700" />
+                  <h3 className="text-base text-gray-900">Monthly Target</h3>
+                </div>
+                <div className="mb-4">
+                  <div className="flex items-baseline gap-2 mb-2">
+                    <span className="text-3xl text-gray-900">
+                      {currentAchieved}
+                    </span>
+                    <span className="text-sm text-gray-500">
+                      / {monthlyTarget} kg CO₂
+                    </span>
+                  </div>
+                  <Progress value={currentProgress} className="h-2 mb-2" />
+                  <p className="text-sm text-emerald-600">
+                    {currentProgress}% complete
+                  </p>
+                </div>
+                <div className="p-3 bg-amber-50 rounded-lg border border-amber-200">
+                  <p className="text-xs text-amber-700">
+                    🎯 Just {monthlyTarget - currentAchieved} kg CO₂ more to reach your goal!
+                  </p>
+                </div>
+              </Card>
+            </motion.div>
+
+            {/* Quick Actions */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5 }}
+            >
+              <Card className="p-5 bg-white border-2 border-gray-200">
+                <h3 className="text-base text-gray-900 mb-4">Quick Actions</h3>
+                <div className="space-y-2">
+                  <Button
+                    className="w-full bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white justify-start"
+                    size="sm"
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Activity
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="w-full border-2 border-gray-300 hover:bg-gray-50 justify-start"
+                    size="sm"
+                  >
+                    <Activity className="w-4 h-4 mr-2" />
+                    View Wallet
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="w-full border-2 border-gray-300 hover:bg-gray-50 justify-start"
+                    size="sm"
+                  >
+                    <Share2 className="w-4 h-4 mr-2" />
+                    Share Achievement
+                  </Button>
+                </div>
+              </Card>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+
+      <Footer />
+    </div>
+  );
+}
