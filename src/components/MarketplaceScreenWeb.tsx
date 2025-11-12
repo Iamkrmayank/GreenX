@@ -140,7 +140,7 @@ export function MarketplaceScreenWeb() {
         <h1 className="text-2xl sm:text-3xl bg-gradient-to-r from-emerald-600 via-green-600 to-teal-600 bg-clip-text text-transparent mb-1 sm:mb-2">
           Marketplace 🛍️
         </h1>
-        <p className="text-sm sm:text-base text-gray-700">Redeem your GXCT tokens for rewards</p>
+        <p className="text-sm sm:text-base text-gray-700">Redeem your Carbenium tokens for rewards</p>
       </motion.div>
 
       <Tabs defaultValue="vouchers" className="w-full">
